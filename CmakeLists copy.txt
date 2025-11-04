@@ -1,0 +1,80 @@
+cmake_minimum_required(VERSION 3.10)
+project(tee_sim_proof)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 设置编译选项
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+
+# 引入OpenSSL依赖
+find_package(OpenSSL REQUIRED)
+if (OPENSSL_FOUND)
+    include_directories(${OPENSSL_INCLUDE_DIR})
+else()
+    message(FATAL_ERROR "OpenSSL not found! Please install OpenSSL development libraries.")
+endif()
+
+# 包含头文件目录
+include_directories(include)
+include_directories(src)
+
+# 收集源文件
+file(GLOB TEE_SIM_SRC src/tee_simulator/*.cpp)
+file(GLOB CORE_INIT_SRC src/core/init/*.cpp)
+file(GLOB CORE_PROOF_SRC src/core/proof_generator/*.cpp)
+file(GLOB CORE_VERIFY_SRC src/core/verifier/*.cpp)
+file(GLOB BLOCKCHAIN_SIM_SRC src/blockchain_sim/*.cpp)
+file(GLOB UTILS_SRC src/utils/*.cpp)
+
+# 构建主程序
+add_executable(proof_main main.cpp
+    ${TEE_SIM_SRC}
+    ${CORE_INIT_SRC}
+    ${CORE_PROOF_SRC}
+    ${CORE_VERIFY_SRC}
+    ${BLOCKCHAIN_SIM_SRC}
+    ${UTILS_SRC}
+)
+target_link_libraries(proof_main ${OPENSSL_LIBRARIES})
+
+# 启用测试
+enable_testing()
+
+# 查找GTest
+find_package(GTest REQUIRED)
+if (GTEST_FOUND)
+    include_directories(${GTEST_INCLUDE_DIRS})
+    
+    # 收集测试文件
+    file(GLOB TEST_SRC test/*.cpp)
+    
+    # 构建测试程序
+    add_executable(proof_test ${TEST_SRC}
+        ${TEE_SIM_SRC}
+        ${CORE_INIT_SRC}
+        ${CORE_PROOF_SRC}
+        ${CORE_VERIFY_SRC}
+        ${BLOCKCHAIN_SIM_SRC}
+        ${UTILS_SRC}
+    )
+    target_link_libraries(proof_test ${OPENSSL_LIBRARIES} ${GTEST_BOTH_LIBRARIES} pthread)
+    
+    # 添加测试
+    add_test(NAME AllTests COMMAND proof_test)
+else()
+    message(WARNING "Google Test not found! Tests will not be built.")
+endif()
+
+# 安装目标
+install(TARGETS proof_main
+    RUNTIME DESTINATION bin
+)
+
+if (GTEST_FOUND)
+    install(TARGETS proof_test
+        RUNTIME DESTINATION bin
+    )
+endif()

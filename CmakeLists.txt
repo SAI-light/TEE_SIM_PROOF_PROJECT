@@ -1,0 +1,51 @@
+cmake_minimum_required(VERSION 3.10)
+
+# 指定 MinGW 编译器
+if(WIN32 AND NOT CMAKE_C_COMPILER)
+    set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
+    set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/g++.exe")
+    set(CMAKE_MAKE_PROGRAM "C:/msys64/mingw64/bin/mingw32-make.exe")
+    set(CMAKE_GENERATOR "MinGW Makefiles" CACHE INTERNAL "" FORCE)
+endif()
+
+project(tee_sim_proof)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 手动指定 OpenSSL 路径
+set(OPENSSL_ROOT_DIR "C:/msys64/mingw64")
+set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/include")
+set(OPENSSL_CRYPTO_LIBRARY "${OPENSSL_ROOT_DIR}/lib/libcrypto.a")
+set(OPENSSL_SSL_LIBRARY "${OPENSSL_ROOT_DIR}/lib/libssl.a")  # 新增 ssl 库路径
+
+# 引入 OpenSSL 依赖
+find_package(OpenSSL 3.0 REQUIRED)
+if (OPENSSL_FOUND)
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message(STATUS "找到 OpenSSL：")
+    message(STATUS "  头文件路径：${OPENSSL_INCLUDE_DIR}")
+    message(STATUS "  加密库路径：${OPENSSL_CRYPTO_LIBRARY}")
+    message(STATUS "  SSL库路径：${OPENSSL_SSL_LIBRARY}")
+else()
+    message(FATAL_ERROR "OpenSSL not found! 请检查 OPENSSL_ROOT_DIR 是否正确")
+endif()
+
+# 包含项目头文件目录
+include_directories(include)
+include_directories(src)
+
+# 收集所有源代码文件
+file(GLOB_RECURSE SOURCES 
+    "src/**/*.cpp"
+    "main.cpp"
+)
+
+# 构建可执行文件
+add_executable(proof_main ${SOURCES})
+
+# 链接库
+target_link_libraries(proof_main PRIVATE 
+    OpenSSL::SSL 
+    OpenSSL::Crypto
+)
