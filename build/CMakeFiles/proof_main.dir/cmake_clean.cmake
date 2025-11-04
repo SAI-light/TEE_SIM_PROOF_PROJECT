@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/proof_main.dir/main.cpp.obj"
+  "CMakeFiles/proof_main.dir/main.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/blockchain_sim/reputation_contract.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/blockchain_sim/reputation_contract.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/blockchain_sim/verification_contract.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/blockchain_sim/verification_contract.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/init/data_owner.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/init/data_owner.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/init/storage_node.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/init/storage_node.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/challenge.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/challenge.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/proof_builder.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/proof_builder.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/time_slot.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/proof_generator/time_slot.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/verifier/aggregate_verifier.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/verifier/aggregate_verifier.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/core/verifier/single_verifier.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/core/verifier/single_verifier.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/attestation_sim.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/attestation_sim.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/enclave_sign.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/enclave_sign.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/random_source.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/tee_simulator/random_source.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/utils/crypto_utils.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/utils/crypto_utils.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/utils/merkle_tree.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/utils/merkle_tree.cpp.obj.d"
+  "CMakeFiles/proof_main.dir/src/utils/time_utils.cpp.obj"
+  "CMakeFiles/proof_main.dir/src/utils/time_utils.cpp.obj.d"
+  "libproof_main.dll.a"
+  "proof_main.exe"
+  "proof_main.exe.manifest"
+  "proof_main.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/proof_main.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
